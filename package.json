@@ -1,0 +1,16 @@
+{
+  "name": "sledgesword",
+  "version": "1.0.0",
+  "description": "discordbot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nishchay",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2",
+    "mongoose": "^5.12.10"
+  }
+}
