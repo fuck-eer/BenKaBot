@@ -42,9 +42,6 @@ function onmessage(msg) {
 			getUserJoke(msg);
 		} else if (msg.content.includes("!learn$")) {
 			postUserJoke(msg);
-		} else if (msg.content === "Hello") {
-			console.log(msg.author);
-			msg.reply(msg.author);
 		} else if (msg.content === "!help") {
 			msg.channel.send(`
 			BEN-KA-BOT Cheatsheat ::
