@@ -6,7 +6,15 @@ const Troll = require("./model/troll");
 
 const disClient = new Discord.Client();
 
-disClient.login(process.env.BOT_TOKEN);
+disClient
+	.login(process.env.BOT_TOKEN)
+	.then((e) => {
+		console.log("bot logged in");
+	})
+	.catch((err) => {
+		console.log("longinerror");
+		console.log(err);
+	});
 
 mongoose
 	.connect(process.env.MONGO_URI, {
@@ -35,22 +43,25 @@ function onmessage(msg) {
 	if (msg.mentions.users.has(disClient.user.id) && !msg.author.bot) {
 		msg.reply('I am a dumb bot that can kill you!,type "!help" for more help');
 	}
-	if (msg.channel.id == "844957046947971152") {
-		if (msg.content === "!momma") {
-			getMommaJoke(msg);
-		} else if (msg.content === "!troll") {
-			getUserJoke(msg);
-		} else if (msg.content.includes("!learn$")) {
-			postUserJoke(msg);
-		} else if (msg.content === "!help") {
-			msg.channel.send(`
+	// if (msg.channel.id == "844957046947971152") {
+	if (msg.content === "!momma") {
+		getMommaJoke(msg);
+	} else if (msg.content === "!troll") {
+		getUserJoke(msg);
+	} else if (
+		msg.content.includes("!learn$") &&
+		!msg.content.includes("!learn$<")
+	) {
+		postUserJoke(msg);
+	} else if (msg.content === "!help") {
+		msg.channel.send(`
 			BEN-KA-BOT Cheatsheat ::
 			"!momma" ==> for momma trolls,
 			"!learn$<Your joke>" ==> to make me learn your jokes,
 			"!troll" ==> for user added trolsl
 			`);
-		}
 	}
+	// }
 }
 
 function getMommaJoke(msg) {
