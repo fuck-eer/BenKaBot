@@ -32,13 +32,27 @@ function readyDiscord() {
 }
 
 function onmessage(msg) {
-	if (msg.content === "!momma") {
-		getMommaJoke(msg);
-	} else if (msg.content.includes("!learn$")) {
-		postUserJoke(msg);
-	} else if (msg.content === "Hello") {
-		console.log(msg.author);
-		msg.reply(msg.author);
+	if (msg.mentions.users.has(disClient.user.id) && !msg.author.bot) {
+		msg.reply('I am a dumb bot that can kill you!,type "!help" for more help');
+	}
+	if (msg.channel.id == "844957046947971152") {
+		if (msg.content === "!momma") {
+			getMommaJoke(msg);
+		} else if (msg.content === "!troll") {
+			getUserJoke(msg);
+		} else if (msg.content.includes("!learn$")) {
+			postUserJoke(msg);
+		} else if (msg.content === "Hello") {
+			console.log(msg.author);
+			msg.reply(msg.author);
+		} else if (msg.content === "!help") {
+			msg.channel.send(`
+			BEN-KA-BOT Cheatsheat ::
+			"!momma" ==> for momma trolls,
+			"!learn$<Your joke>" ==> to make me learn your jokes,
+			"!troll" ==> for user added trolsl
+			`);
+		}
 	}
 }
 
@@ -46,6 +60,19 @@ function getMommaJoke(msg) {
 	MommaJoke.countDocuments()
 		.then((e) => {
 			return MommaJoke.findOne({ number: getTrollNumber(1, e) });
+		})
+		.then((troll) => {
+			msg.reply(troll.troll);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+}
+
+function getUserJoke(msg) {
+	Troll.countDocuments()
+		.then((e) => {
+			return Troll.findOne({ number: getTrollNumber(1, e) });
 		})
 		.then((troll) => {
 			msg.reply(troll.troll);
